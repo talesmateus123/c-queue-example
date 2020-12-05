@@ -19,6 +19,7 @@ void showQueue(queue *q);
 bool isEmptyQueue(queue *q);
 node * searchQueue(queue *q, int number);
 void freeQueue(queue *q);
+int removeQueue(queue *q);
 
 int main(int argc, char const *argv[]) {
 	queue *q = malloc(sizeof(queue));
@@ -40,6 +41,13 @@ int main(int argc, char const *argv[]) {
 	printf("Searching for number 1:\n");
 	if(aux != NULL)
 		printf("%d\n", aux->number);
+
+	printf("Removing a number\n");
+	int number;
+	number = removeQueue(q);
+	printf("Removed number: %d\n", number);
+	printf("Showing queue again:\n");
+	showQueue(q);
 	
 	// free queue tests
 	printf("isEmpty: %d\n", isEmptyQueue(q));
@@ -108,4 +116,19 @@ void freeQueue(queue *q) {
 		aux = aux2;
 	}
 	q->start=q->end = NULL;
+}
+
+int removeQueue(queue *q) {
+	node *aux;
+	int number;
+	if(isEmptyQueue(q))
+		return 0;
+	aux=q->start;
+	q->start=q->start->next;
+	aux->next=NULL;
+	number=aux->number;
+	free(aux);
+	if(q->start == NULL)
+		q->end = NULL;
+	return number;
 }
