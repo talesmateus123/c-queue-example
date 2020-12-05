@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct n {
 	int number;
@@ -15,6 +16,7 @@ void printLine();
 void startQueue(queue *q);
 void insertQueue(queue *q, int number);
 void showQueue(queue *q);
+bool isEmptyQueue(queue *q);
 
 int main(int argc, char const *argv[]) {
 	queue *q = malloc(sizeof(queue));
@@ -56,4 +58,10 @@ void showQueue(queue *q) {
 		aux=aux->next;
 	}
 	printLine();
+}
+
+bool isEmptyQueue(queue *q) {
+	if (q->end == NULL) 
+		return true;
+	return false;
 }
