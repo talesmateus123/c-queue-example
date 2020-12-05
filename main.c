@@ -17,15 +17,36 @@ void startQueue(queue *q);
 void insertQueue(queue *q, int number);
 void showQueue(queue *q);
 bool isEmptyQueue(queue *q);
+node * searchQueue(queue *q, int number);
+void freeQueue(queue *q);
 
 int main(int argc, char const *argv[]) {
 	queue *q = malloc(sizeof(queue));
+	// start test
 	startQueue(q);
 
+	// insert test
 	insertQueue(q, 1);
+	printf("Showing queue:\n");
 	showQueue(q);
 	insertQueue(q, 2);
+	printf("Showing queue again:\n");
 	showQueue(q);
+
+	// search test
+	node *aux;
+	aux = searchQueue(q, 1);
+
+	printf("Searching for number 1:\n");
+	if(aux != NULL)
+		printf("%d\n", aux->number);
+	
+	// free queue tests
+	printf("isEmpty: %d\n", isEmptyQueue(q));
+	printf("Cleaning queue\n");
+	freeQueue(q);
+	printf("isEmpty: %d\n", isEmptyQueue(q));
+
 	return 0;
 }
 
@@ -64,4 +85,27 @@ bool isEmptyQueue(queue *q) {
 	if (q->end == NULL) 
 		return true;
 	return false;
+}
+
+node * searchQueue(queue *q, int number) {
+	node *aux = q->start;
+	while (aux != NULL) {
+		if(aux-> number == number) {
+			return aux;
+		}
+		aux = aux->next;
+	}
+	return NULL;
+}
+
+void freeQueue(queue *q) {
+	node *aux, *aux2;
+	aux = q->start;
+	while(aux != NULL) {
+		aux2 = aux->next;
+		aux->next=NULL;
+		free(aux);
+		aux = aux2;
+	}
+	q->start=q->end = NULL;
 }
